@@ -88,7 +88,8 @@ namespace BaseService
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                // options.UseSqlServer();
+                options.UseMySQL();
             });
 
             //context.Services.AddStackExchangeRedisCache(options =>
@@ -127,11 +128,11 @@ namespace BaseService
 
             Configure<AbpLocalizationOptions>(options =>
             {
-                options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
-                options.Languages.Add(new LanguageInfo("en", "en", "English"));
-                options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português"));
-                options.Languages.Add(new LanguageInfo("ru", "ru", "Русский"));
-                options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
+                // options.Languages.Add(new LanguageInfo("cs", "cs", "Čeština"));
+                // options.Languages.Add(new LanguageInfo("en", "en", "English"));
+                // options.Languages.Add(new LanguageInfo("pt-BR", "pt-BR", "Português"));
+                // options.Languages.Add(new LanguageInfo("ru", "ru", "Русский"));
+                // options.Languages.Add(new LanguageInfo("tr", "tr", "Türkçe"));
                 options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "简体中文"));
                 options.Languages.Add(new LanguageInfo("zh-Hant", "zh-Hant", "繁體中文"));
             });

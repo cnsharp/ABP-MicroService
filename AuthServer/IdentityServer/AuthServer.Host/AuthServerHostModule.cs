@@ -15,7 +15,7 @@ using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
@@ -39,7 +39,7 @@ namespace AuthServer.Host
         typeof(AbpIdentityApplicationContractsModule),
         typeof(AbpAccountApplicationModule),
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
-        typeof(AbpEntityFrameworkCoreSqlServerModule),
+        typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAspNetCoreMvcUiBasicThemeModule),
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
@@ -65,12 +65,12 @@ namespace AuthServer.Host
 
             Configure<AbpDbContextOptions>(options =>
             {
-                options.UseSqlServer();
+                options.UseMySQL();
             });
 
             Configure<AbpLocalizationOptions>(options =>
             {
-                options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "¼òÌåÖÐÎÄ"));
+                options.Languages.Add(new LanguageInfo("zh-Hans", "zh-Hans", "ç®€ä½“ä¸­æ–‡"));
             });
 
             context.Services.AddCors(options =>

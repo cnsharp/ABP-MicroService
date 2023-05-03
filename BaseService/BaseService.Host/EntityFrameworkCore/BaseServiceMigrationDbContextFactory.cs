@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
@@ -13,8 +14,10 @@ namespace BaseService.EntityFrameworkCore
 
             var configuration = BuildConfiguration();
 
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 11));
             var builder = new DbContextOptionsBuilder<BaseServiceMigrationDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseMySql(configuration.GetConnectionString("Default"),
+                    serverVersion);
 
             return new BaseServiceMigrationDbContext(builder.Options);
         }

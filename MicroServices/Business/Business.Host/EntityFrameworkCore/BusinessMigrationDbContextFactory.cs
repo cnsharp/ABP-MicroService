@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using System.IO;
@@ -10,9 +11,14 @@ namespace Business.EntityFrameworkCore
         public BusinessMigrationDbContext CreateDbContext(string[] args)
         {
             var configuration = BuildConfiguration();
-
+            //
+            // var builder = new DbContextOptionsBuilder<BusinessMigrationDbContext>()
+            //     .UseSqlServer(configuration.GetConnectionString("Business"));
+            
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 11));
             var builder = new DbContextOptionsBuilder<BusinessMigrationDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Business"));
+                .UseMySql(configuration.GetConnectionString("Business"),
+                    serverVersion);
 
             return new BusinessMigrationDbContext(builder.Options);
         }

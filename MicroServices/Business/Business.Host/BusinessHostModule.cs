@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Transactions;
+using Hangfire.MySql;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
@@ -23,7 +25,7 @@ using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Data;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
@@ -34,7 +36,8 @@ namespace Business
 {
     [DependsOn(
         typeof(AbpAutofacModule),
-        typeof(AbpEntityFrameworkCoreSqlServerModule),
+        // typeof(AbpEntityFrameworkCoreSqlServerModule),
+        typeof(AbpEntityFrameworkCoreMySQLModule),
         typeof(BusinessHttpApiModule),
         typeof(BusinessApplicationModule),
         typeof(BusinessEntityFrameworkCoreModule),
@@ -82,7 +85,19 @@ namespace Business
         {
             context.Services.AddHangfire(config =>
             {
-                config.UseSqlServerStorage(configuration.GetConnectionString("Business"));
+                config.UseStorage(new MySqlStorage(configuration.GetConnectionString("Default"),
+                    new MySqlStorageOptions
+                    {
+                        TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                        QueuePollInterval = TimeSpan.FromSeconds(15),
+                        JobExpirationCheckInterval = TimeSpan.FromHours(1),
+                        CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                        PrepareSchemaIfNecessary = true,
+                        DashboardJobListLimit = 50000,
+                        TransactionTimeout = TimeSpan.FromMinutes(1),
+                        TablesPrefix = "Hangfire"
+                    }
+                    ));
             });
         }
 

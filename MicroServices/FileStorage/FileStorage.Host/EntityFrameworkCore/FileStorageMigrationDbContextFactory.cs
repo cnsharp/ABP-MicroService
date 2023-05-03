@@ -14,9 +14,11 @@ namespace FileStorage.EntityFrameworkCore
         public FileStorageMigrationDbContext CreateDbContext(string[] args)
         {
             var configuration = BuildConfiguration();
-
+            
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 11));
             var builder = new DbContextOptionsBuilder<FileStorageMigrationDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("FileStorage"));
+                .UseMySql(configuration.GetConnectionString("FileStorage"),
+                    serverVersion);
 
             return new FileStorageMigrationDbContext(builder.Options);
         }

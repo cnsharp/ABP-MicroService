@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,11 @@ namespace AuthServer.EntityFrameworkCore
         {
             var configuration = BuildConfiguration();
 
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 11));
             var builder = new DbContextOptionsBuilder<AuthServerDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseMySql(configuration.GetConnectionString("Default"),
+                    serverVersion
+                );
 
             return new AuthServerDbContext(builder.Options);
         }

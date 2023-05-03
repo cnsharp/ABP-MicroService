@@ -107,7 +107,7 @@ public class AuthServerModule : AbpModule
 
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer();
+            options.UseMySQL();
         });
 
         Configure<AbpBundlingOptions>(options =>

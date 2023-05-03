@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="DataSeeder\" />
+    <Folder Include="Migrations" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

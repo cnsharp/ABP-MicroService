@@ -3,6 +3,7 @@ using System;
 using FileStorage.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace FileStorage.Migrations
 {
     [DbContext(typeof(FileStorageMigrationDbContext))]
-    partial class FileStorageMigrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220522171312_InitMySql")]
+    partial class InitMySql
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
